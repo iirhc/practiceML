@@ -9,9 +9,9 @@ if __name__ == '__main__':
     feature_list = FeatureList()
     feature_list.add_dict("positive-words.txt")
     feature_list.add_dict("negative-words.txt")
-    feature_list.add_feature(train_data.get_tokens())
+    feature_list.add_feature(train_data)
 
-    feature = feature_list.generate_feature(train_data.get_tokens())
+    feature = feature_list.generate_feature(train_data)
     gold_standard = train_data.get_gold_standard()
 
     model = Model()
@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     test_data = Data("tweets_SEMEVAL_test2013.txt")
 
-    feature = feature_list.generate_feature(test_data.get_tokens())
+    feature = feature_list.generate_feature(test_data)
     gold_standard = test_data.get_gold_standard()
 
     res = model.predict(feature, gold_standard)

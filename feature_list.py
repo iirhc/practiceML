@@ -6,6 +6,7 @@ from itertools import islice
 class FeatureList:
     def __init__(self):
         self.feature_list = []
+        self.dictionary_list = []
 
     def add_dict(self, path, ignore=35):
         sentiment_dict = open(path)
@@ -14,19 +15,15 @@ class FeatureList:
         for line in islice(sentiment_dict, ignore, None):
             match = re.findall(patten, line)
             dict_list.append(match)
-        self.feature_list += dict_list
+        self.dictionary_list += dict_list
         print("import sentiment dictionary finished.")
 
     def add_feature(self, data):
-        feature_set = set()
-        for datum in data:
-            for word in datum:
-                feature_set.add(word)
+        feature_set = data.get_word_set()
         self.feature_list += list(feature_set)
         print("import data feature finished.")
-        print(len(self.feature_list))
 
-    def add_feature_from_data(self, path="temp/data.pkl"):
+    def add_feature_from_save(self, path="temp/data.pkl"):
         with open(path, "rb") as f:
             data = pickle.load(f)
         feature_set = set()
@@ -37,11 +34,19 @@ class FeatureList:
         print("import data feature finished.")
 
     def generate_feature(self, data):
+        print(len(self.feature_list)+len(self.dictionary_list))
+        data = data.get_tokens()
         features = []
         tstart = time.time()
         for datum in data:
             feature = []
             for word in self.feature_list:
+                if word in datum:
+                    # append TFIDF here
+                    feature.append(1)
+                else:
+                    feature.append(0)
+            for word in self.dictionary_list:
                 if word in datum:
                     feature.append(1)
                 else:
