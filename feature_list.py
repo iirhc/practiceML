@@ -35,19 +35,20 @@ class FeatureList:
 
     def generate_feature(self, data):
         print(len(self.feature_list)+len(self.dictionary_list))
-        data = data.get_tokens()
+        data = data.get_tweets()
         features = []
         tstart = time.time()
         for datum in data:
+            content = datum.get_content()
             feature = []
             for word in self.feature_list:
-                if word in datum:
+                if word in content:
                     # append TFIDF here
-                    feature.append(1)
+                    feature.append(datum.get_tfidf(word))
                 else:
                     feature.append(0)
             for word in self.dictionary_list:
-                if word in datum:
+                if word in content:
                     feature.append(1)
                 else:
                     feature.append(0)
