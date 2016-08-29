@@ -13,8 +13,7 @@ class FeatureList:
         patten = "[\w'-]+"
         dict_list = []
         for line in islice(sentiment_dict, ignore, None):
-            match = re.findall(patten, line)
-            dict_list.append(match)
+            dict_list.append(line.strip('\n'))
         self.dictionary_list += dict_list
         print("import sentiment dictionary finished.")
 
@@ -43,7 +42,6 @@ class FeatureList:
             feature = []
             for word in self.feature_list:
                 if word in content:
-                    # append TFIDF here
                     feature.append(datum.get_tfidf(word))
                 else:
                     feature.append(0)

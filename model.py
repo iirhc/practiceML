@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report
 
 class Model:
     def __init__(self):
-        self.clf = LinearSVC(C=100)
+        self.clf = LinearSVC()
 
     def train(self, feature, gold_standard):
         tstart = time.time()
