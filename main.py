@@ -17,7 +17,7 @@ if __name__ == '__main__':
     model = model.Model()
     model.train(feature, gold_standard)
 
-    test_data = Data("tweets_SEMEVAL_test2013.txt")
+    test_data = load.Data("tweets_SEMEVAL_test2013.txt")
 
     feature = feature_list.generate_feature(test_data)
     gold_standard = test_data.get_gold_standard()
